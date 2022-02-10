@@ -34,9 +34,8 @@ class StockSerializer(serializers.ModelSerializer):
         for i in positions:
             new_stock = StockProduct.objects.create(product=i['product'],
                                                     stock=stock,
-                                                    defaults={'quantity': i['quantity'],
-                                                              'price': i['price']
-                                                              }
+                                                    quantity=i['quantity'],
+                                                    price=i['price']
                                                     )
             stock.positions.add(new_stock)
         return stock
@@ -50,8 +49,9 @@ class StockSerializer(serializers.ModelSerializer):
         for i in positions:
             new_stock = StockProduct.objects.update_or_create(product=i['product'],
                                                               stock=stock,
-                                                              quantity=i['quantity'],
-                                                              price=i['price']
+                                                              defaults={'quantity': i['quantity'],
+                                                                        'price': i['price']
+                                                                        }
                                                               )
 
         return stock

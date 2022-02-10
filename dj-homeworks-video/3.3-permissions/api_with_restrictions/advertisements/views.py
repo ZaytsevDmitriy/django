@@ -1,10 +1,15 @@
 from rest_framework.permissions import IsAuthenticated
+from rest_framework.throttling import AnonRateThrottle, UserRateThrottle
 from rest_framework.viewsets import ModelViewSet
 
+from .models import Advertisement
+from .serializers import AdvertisementSerializer
 
 class AdvertisementViewSet(ModelViewSet):
     """ViewSet для объявлений."""
-
+    queryset = Advertisement.objects.all()
+    serializer_class = AdvertisementSerializer
+    throttle_classes = [AnonRateThrottle, UserRateThrottle]
     # TODO: настройте ViewSet, укажите атрибуты для кверисета,
     #   сериализаторов и фильтров
 
